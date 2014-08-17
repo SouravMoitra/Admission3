@@ -10,7 +10,6 @@ class SubjectDetail < ActiveRecord::Base
 	def subject_cutoff
 		uid = self.academic.user_id
 		cat = User.find(uid).personal.category
-
 		SubCutoff.where(subject_id: subject_id).pluck(cat)[0]
 	end
 end

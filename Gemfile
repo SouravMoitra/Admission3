@@ -43,7 +43,8 @@ gem 'spring',        group: :development
 
 gem 'devise'
 gem 'haml'
-
+gem 'bootstrap-sass'
+gem "recaptcha", :require => "recaptcha/rails"
 gem 'rails_12factor'
 
 group :development, :test do
@@ -54,7 +55,6 @@ end
 
 
 gem 'rmagick'
-gem 'simple_captcha2', require: 'simple_captcha'
 gem 'carrierwave'
 gem 'will_paginate'
 gem 'foreigner'

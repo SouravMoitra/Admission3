@@ -1,5 +1,21 @@
 Rails.application.routes.draw do
-  devise_for :users
+
+  get 'user_pages/home'
+  get 'user_pages/help'
+  get 'user_pages/contact'
+  get 'user_pages/about'
+
+  devise_for :users, controllers: { registrations: 'registrations' }
+  devise_scope :user do
+    get "sign_in", to: "devise/sessions#new"
+    get "sign_up", to: "devise/registrations#new"
+  end
+
+  get "home", to: "user_pages#home"
+  get "help", to: "user_pages#help"
+  get "contact", to: "user_pages#contact"
+  get "about", to: "user_pages#about"
+  root 'user_pages#home'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

@@ -1,0 +1,85 @@
+$greenish-color: #6E3700;
+$def-border-radius: 5px;
+$bak-error: #FFC6C6;
+@import 'bootstrap';
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  background-color: #B0B0A2;
+}
+
+body {
+  margin: 0 auto;
+  width: 80%;
+  padding: 10px;
+  background-color: #FFFFDC;
+}
+.banner-img {
+  width: 100%;
+  border-radius: $def-border-radius;
+  margin-bottom: 10px;
+}
+h2 {
+  font-family: arial;
+}
+footer {
+  padding: 10px 15px;
+  margin: 10px 0 0 0;
+  background-color: #FFAC59;
+  border: 1px solid #B87C40;
+  border-radius: $def-border-radius;
+  color: $greenish-color;
+  .footer-right {
+    float: right;
+    a {
+      color: $greenish-color;
+      text-decoration: none;
+      &:hover {
+        background-color: #FFFF00;
+      }
+    }
+  }
+}
+@media (max-width: 768px) {
+  body {
+    width: 100%;
+    margin: 0;
+  }
+}
+
+#error_explanation {
+  color: #f00;
+  ul {
+    list-style: none;
+    margin: 0 0 18px 0;
+  }
+  h2 {
+    font-size: 20px;
+    background-color: $bak-error;
+    padding: 8px;
+    border-radius: 5px;
+  }
+}
+
+.field_with_errors {
+  @extend .control-group;
+  @extend .error;
+  input {
+    border: 1px solid red;
+    &:focus {
+      border: 1px solid red
+    }
+  }
+}
+.alert-alert {
+  padding: 15px;
+  background-color: $bak-error;
+  color: #B8004A;
+}
+.alert-notice {
+  @extend .alert-success
+}

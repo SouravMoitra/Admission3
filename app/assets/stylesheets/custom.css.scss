@@ -2,7 +2,6 @@ $greenish-color: #6E3700;
 $def-border-radius: 5px;
 $bak-error: #FFC6C6;
 @import 'bootstrap';
-
 * {
   margin: 0;
   padding: 0;
@@ -76,10 +75,26 @@ footer {
   }
 }
 .alert-alert {
-  padding: 15px;
-  background-color: $bak-error;
-  color: #B8004A;
+  @extend .alert-danger
+}
+
+.container-fluid {
+  padding: 0;
+}
+.panel-remove-right-pad {
+  padding-right: 0;
 }
 .alert-notice {
   @extend .alert-success
+}
+strong {
+  display: inline-block;
+  width: 80px;
+}
+
+.user-photo {
+  width: 100%;
+}
+.btn-middle {
+  margin: 0 auto;
 }

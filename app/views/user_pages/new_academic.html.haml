@@ -1,0 +1,57 @@
+.row
+  .col-md-8.col-md-offset-2.col-sm-10.col-sm-offset-1.col-xs-12.col-xs-offset-0
+    .panel.panel-primary
+      .panel-heading
+        Fill up your academics Details
+      .panel-body
+        = form_for @academic, url: user_pages_create_academic_path , method: :post, role: "form" do |f|
+          - if @academic.errors.any?
+            #error_explanation
+              %h2
+                = pluralize(@academic.errors.count, "error")
+                prohibited this candidate from being saved:
+              %ul
+                - @academic.errors.full_messages.each do |message|
+                  %li= message
+          %p
+            = f.label :tenth_roll
+            %br/
+            = f.number_field :tenth_roll, class: "form-control", :required => true
+          %p
+            = f.label :tenth_board
+            %br/
+            = f.text_field :tenth_board, class: "form-control", :required => true
+          %p
+            = f.label :tenth_year_pass
+            %br/
+            = f.number_field :tenth_year_pass, class: "form-control", :required => true
+          %p
+            = f.label :tenth_marks_percent
+            %br/
+            = f.number_field :tenth_marks_percent, step: 'any', class: "form-control"
+          %p
+            = f.label :hs_roll
+            %br/
+            = f.number_field :hs_roll, class: "form-control", :required => true
+          %p
+            = f.label :hs_board
+            %br/
+            = f.text_field :hs_board, class: "form-control", :required => true
+          %p
+            = f.label :hs_year_pass
+            %br/
+            = f.number_field :hs_year_pass, class: "form-control", :required => true
+          %p
+            = f.label :hs_marks_percent
+            %br/
+            = f.number_field :hs_marks_percent, step: 'any', class: "form-control", :required => true
+
+            = f.hidden_field :stream_id, value: @stream.id
+          %p
+            = f.fields_for :subject_details do |builder|
+              = render "subject_details_field", f: builder
+          %p
+            = f.fields_for :additional_subjects do |builder|
+              = render "additional_subjects_field", f: builder
+          %p
+            = f.submit

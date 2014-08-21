@@ -1,0 +1,5 @@
+%p
+  = f.label :subject
+  = f.select :subject_id, @stream.subjects.all.collect {|sub| [sub.subject, sub.id ]}, class: "form-control", :required => true
+  = f.label :marks
+  = f.number_field :marks, class: "form-control", :required => true

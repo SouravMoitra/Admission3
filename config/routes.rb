@@ -4,6 +4,10 @@ Rails.application.routes.draw do
   get 'user_pages/help'
   get 'user_pages/contact'
   get 'user_pages/about'
+  get 'user_pages/new_personal'
+  post 'user_pages/create_personal'
+  get 'user_pages/new_academic'
+  post 'user_pages/create_academic'
 
   devise_for :users, controllers: { registrations: 'registrations' }
   devise_scope :user do

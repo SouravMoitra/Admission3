@@ -31,12 +31,12 @@
               %li
                 %a{:href => "#"} Another action
               %li
-                %a{:href => "#"} Something else here
+                =link_to "Edit password", edit_user_registration_path
               %li.divider
               %li
                 =link_to "Sign out", destroy_user_session_path, method: "delete", data: {confirm: "Are you sure to sign out ?"}
         -else
           %li
-            =link_to "Sign up", sign_up_path
+            =link_to "Sign up", sign_up_path, "data-no-turbolink" => true
           %li
             =link_to "Sign in", sign_in_path

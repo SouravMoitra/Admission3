@@ -7,12 +7,13 @@ class Personal < ActiveRecord::Base
   validates :date_of_birth, presence: true
   validates :gender, presence: true, length: { maximum: 1}
   validates :category, presence: true
-  validates :blood_group, presence: true, length: { maximum: 2 }
+  validates :blood_group, presence: true, length: { maximum: 3 }
   validates :fathers_name, presence: true, length: { in: 5..48 }
   validates :mothers_name, presence: true, length: { in: 5..48 }
   validates :address_present, presence: true, length: {in: 10..100}
   validates :photo, presence: true
 
+  mount_uploader :photo, PhotoUploader
 
   private
   def strip_whitespaces

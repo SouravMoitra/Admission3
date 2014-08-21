@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140816044325) do
+ActiveRecord::Schema.define(version: 20140820153420) do
 
   create_table "academics", force: true do |t|
     t.integer  "user_id"
@@ -26,6 +26,7 @@ ActiveRecord::Schema.define(version: 20140816044325) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "stream_id",                                                   null: false
+    t.integer  "calculated_marks",                                            null: false
   end
 
   add_index "academics", ["user_id"], name: "index_academics_on_user_id", unique: true, using: :btree
@@ -38,6 +39,7 @@ ActiveRecord::Schema.define(version: 20140816044325) do
     t.datetime "updated_at"
   end
 
+  add_index "additional_subjects", ["academic_id", "subject"], name: "index_additional_subjects_on_academic_id_and_subject", unique: true, using: :btree
   add_index "additional_subjects", ["academic_id"], name: "index_add_subs_on_academic_id", unique: true, using: :btree
 
   create_table "cutoffs", force: true do |t|
@@ -114,6 +116,7 @@ ActiveRecord::Schema.define(version: 20140816044325) do
     t.datetime "updated_at"
   end
 
+  add_index "subject_details", ["academic_id", "subject_id"], name: "index_subject_details_on_academic_id_and_subject_id", unique: true, using: :btree
   add_index "subject_details", ["academic_id"], name: "sub_deta_fk2", using: :btree
   add_index "subject_details", ["subject_id", "academic_id"], name: "index_subject_id_on_sub_det", unique: true, using: :btree
 

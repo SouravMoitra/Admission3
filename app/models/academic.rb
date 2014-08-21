@@ -1,6 +1,7 @@
 class Academic < ActiveRecord::Base
   belongs_to :users
   has_many :additional_subjects
+  has_many :subject_details
   # validations
   validates :tenth_year_pass, presence: true, numericality: {only_integer: true, greater_than_or_equal_to: 2000, less_than_or_equal_to: 2012}
   validates :tenth_board, presence: true, length: { maximum: 5}
@@ -12,6 +13,9 @@ class Academic < ActiveRecord::Base
   validates :hs_roll, presence: true
 
   before_save :strip_whitespaces
+
+  accepts_nested_attributes_for :subject_details, allow_destroy: true
+  accepts_nested_attributes_for :additional_subjects, allow_destroy: true
 
   private
   def strip_whitespaces

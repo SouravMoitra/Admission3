@@ -1,9 +1,9 @@
 class CreateAdditionalSubjects < ActiveRecord::Migration
   def change
     create_table :additional_subjects do |t|
-      t.integer "academic_id"
-      t.string   "subject"
-      t.integer  "subject_marks"
+      t.string :academic_id, null: false
+      t.string :subject_name, null: false
+      t.integer :marks, null: false
 
       t.timestamps
     end

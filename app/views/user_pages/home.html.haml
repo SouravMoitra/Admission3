@@ -78,5 +78,5 @@
       .panel-body
         %p Select your stream and Fill up your academic details
         %form{action: "/user_pages/new_academic", method: "get"}
-          = select_tag "stream_id", options_for_select(Stream.all.collect{|s| [s.streams, s.id]})
+          = select_tag "stream_id", options_for_select(Stream.all.collect{|s| [s.stream_name, s.id]})
           %input{ type: "submit" ,class: "btn btn-danger btn-middle"}

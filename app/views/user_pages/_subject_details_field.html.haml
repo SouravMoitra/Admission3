@@ -1,5 +1,8 @@
 %p
   = f.label :subject
-  = f.select :subject_id, @stream.subjects.all.collect {|sub| [sub.subject, sub.id ]}, class: "form-control", :required => true
+  = f.select :main_subject_id, @stream.main_subjects.all.collect {|sub| [sub.subject_name, sub.id ]}, class: "form-control", :required => true
+%p
   = f.label :marks
   = f.number_field :marks, class: "form-control", :required => true
+
+  =f.hidden_field :user_id, value: current_user.id

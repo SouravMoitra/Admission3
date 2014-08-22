@@ -11,49 +11,55 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140820153420) do
+ActiveRecord::Schema.define(version: 20140821175117) do
 
   create_table "academics", force: true do |t|
-    t.integer  "user_id"
-    t.integer  "tenth_roll",                                   default: 0
-    t.integer  "tenth_year_pass",                              default: 2000
-    t.decimal  "tenth_marks_percent", precision: 10, scale: 2, default: 40.0
-    t.string   "tenth_board"
-    t.integer  "hs_roll",                                      default: 0
-    t.integer  "hs_year_pass",                                 default: 2002
-    t.decimal  "hs_marks_percent",    precision: 10, scale: 2, default: 40.0
-    t.string   "hs_board"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.integer  "user_id",                                                     null: false
+    t.integer  "tenth_roll",                                   default: 0,    null: false
+    t.integer  "tenth_year_pass",                              default: 2000, null: false
+    t.decimal  "tenth_marks_percent", precision: 10, scale: 2, default: 40.0, null: false
+    t.string   "tenth_board",                                                 null: false
+    t.integer  "hs_roll",                                      default: 0,    null: false
+    t.integer  "hs_year_pass",                                 default: 2002, null: false
+    t.decimal  "hs_marks_percent",    precision: 10, scale: 2, default: 40.0, null: false
+    t.string   "hs_board",                                                    null: false
     t.integer  "stream_id",                                                   null: false
     t.integer  "calculated_marks",                                            null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
-  add_index "academics", ["user_id"], name: "index_academics_on_user_id", unique: true, using: :btree
+  add_index "academics", ["user_id"], name: "academics_user_id_fk", using: :btree
 
   create_table "additional_subjects", force: true do |t|
-    t.integer  "academic_id"
-    t.string   "subject"
-    t.integer  "subject_marks"
+    t.string   "academic_id",  null: false
+    t.string   "subject_name", null: false
+    t.integer  "marks",        null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "additional_subjects", ["academic_id", "subject"], name: "index_additional_subjects_on_academic_id_and_subject", unique: true, using: :btree
-  add_index "additional_subjects", ["academic_id"], name: "index_add_subs_on_academic_id", unique: true, using: :btree
+  add_index "additional_subjects", ["academic_id", "subject_name"], name: "index_additional_subjects_on_academic_id_and_subject", unique: true, using: :btree
 
-  create_table "cutoffs", force: true do |t|
-    t.integer  "gen"
-    t.integer  "sc"
-    t.integer  "st"
-    t.integer  "obc_a"
-    t.integer  "obc_b"
+  create_table "main_subject_details", force: true do |t|
+    t.integer  "main_subject_id", null: false
+    t.integer  "academic_id",     null: false
+    t.integer  "marks",           null: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "stream_id",  null: false
   end
 
-  add_index "cutoffs", ["stream_id"], name: "cuttoff_fk_to_streams", using: :btree
+  add_index "main_subject_details", ["academic_id", "main_subject_id"], name: "index_main_subject_details_on_academic_id_and_subject_id", unique: true, using: :btree
+  add_index "main_subject_details", ["main_subject_id"], name: "sub_details_fk1", using: :btree
+
+  create_table "main_subjects", force: true do |t|
+    t.integer  "stream_id",    null: false
+    t.string   "subject_name", null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "main_subjects", ["stream_id"], name: "subjects_fk", using: :btree
 
   create_table "personals", force: true do |t|
     t.integer  "user_id"
@@ -75,28 +81,41 @@ ActiveRecord::Schema.define(version: 20140820153420) do
   add_index "personals", ["category"], name: "category_index-onpersonals", using: :btree
   add_index "personals", ["user_id"], name: "index_personals_on_user_id", unique: true, using: :btree
 
-  create_table "quota", force: true do |t|
-    t.integer  "gen"
-    t.integer  "sc"
-    t.integer  "st"
-    t.integer  "obc_a"
-    t.integer  "obc_b"
+  create_table "stream_cutoffs", force: true do |t|
+    t.integer  "stream_id",              null: false
+    t.integer  "gen",        default: 0, null: false
+    t.integer  "sc",         default: 0, null: false
+    t.integer  "st",         default: 0, null: false
+    t.integer  "obc_a",      default: 0, null: false
+    t.integer  "obc_b",      default: 0, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "stream_id",  null: false
   end
 
-  add_index "quota", ["stream_id"], name: "streams_fk_to_streams", using: :btree
+  add_index "stream_cutoffs", ["stream_id"], name: "stream_cutoff_fk", using: :btree
 
-  create_table "streams", force: true do |t|
-    t.string   "streams"
-    t.integer  "seats"
+  create_table "stream_quota", force: true do |t|
+    t.integer  "stream_id",              null: false
+    t.integer  "gen",        default: 0, null: false
+    t.integer  "sc",         default: 0, null: false
+    t.integer  "st",         default: 0, null: false
+    t.integer  "obc_a",      default: 0, null: false
+    t.integer  "obc_b",      default: 0, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  add_index "stream_quota", ["stream_id"], name: "stream_quota_fk", using: :btree
+
+  create_table "streams", force: true do |t|
+    t.string   "stream_name",             null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "seats",       default: 0, null: false
   end
 
   create_table "sub_cutoffs", force: true do |t|
-    t.integer  "subject_id"
+    t.integer  "main_subject_id"
     t.integer  "gen"
     t.integer  "sc"
     t.integer  "st"
@@ -106,28 +125,7 @@ ActiveRecord::Schema.define(version: 20140820153420) do
     t.datetime "updated_at"
   end
 
-  add_index "sub_cutoffs", ["subject_id"], name: "sub_cutoff_fK_to_subjects", using: :btree
-
-  create_table "subject_details", force: true do |t|
-    t.integer  "subject_id"
-    t.integer  "academic_id"
-    t.integer  "marks"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "subject_details", ["academic_id", "subject_id"], name: "index_subject_details_on_academic_id_and_subject_id", unique: true, using: :btree
-  add_index "subject_details", ["academic_id"], name: "sub_deta_fk2", using: :btree
-  add_index "subject_details", ["subject_id", "academic_id"], name: "index_subject_id_on_sub_det", unique: true, using: :btree
-
-  create_table "subjects", force: true do |t|
-    t.string   "subject"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "stream_id"
-  end
-
-  add_index "subjects", ["stream_id"], name: "subject_fk", using: :btree
+  add_index "sub_cutoffs", ["main_subject_id"], name: "sub_cutoff_fK_to_main_subjects", using: :btree
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false
@@ -150,19 +148,17 @@ ActiveRecord::Schema.define(version: 20140820153420) do
 
   add_foreign_key "academics", "users", name: "academics_user_id_fk"
 
-  add_foreign_key "additional_subjects", "academics", name: "additional_subjects_fk"
+  add_foreign_key "main_subject_details", "academics", name: "sub_deta_fk2"
+  add_foreign_key "main_subject_details", "main_subjects", name: "sub_details_fk1"
 
-  add_foreign_key "cutoffs", "streams", name: "cuttoff_fk_to_streams"
+  add_foreign_key "main_subjects", "streams", name: "subjects_fk"
 
   add_foreign_key "personals", "users", name: "personals_foreign_key"
 
-  add_foreign_key "quota", "streams", name: "streams_fk_to_streams"
+  add_foreign_key "stream_cutoffs", "streams", name: "stream_cutoff_fk"
 
-  add_foreign_key "sub_cutoffs", "subjects", name: "sub_cutoff_fK_to_subjects"
+  add_foreign_key "stream_quota", "streams", name: "stream_quota_fk"
 
-  add_foreign_key "subject_details", "academics", name: "sub_deta_fk2"
-  add_foreign_key "subject_details", "subjects", name: "sub_deta_fk1"
-
-  add_foreign_key "subjects", "streams", name: "subject_fk"
+  add_foreign_key "sub_cutoffs", "main_subjects", name: "sub_cutoff_fK_to_main_subjects"
 
 end

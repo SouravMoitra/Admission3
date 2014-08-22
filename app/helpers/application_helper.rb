@@ -13,10 +13,10 @@ module ApplicationHelper
   def calculate_marks(academic_record)
     marks = Hash.new
     academic_record.additional_subjects.each_with_index do |sub, index|
-      marks[index] = sub.subject_marks.to_i unless  sub.subject_marks.blank?
+      marks[index] = sub.marks.to_i unless  sub.marks.blank?
     end
     sum_imp_marks = 0
-    academic_record.subject_details.each do |sub|
+    academic_record.main_subject_details.each do |sub|
       sum_imp_marks += sub.marks
     end
     marks = marks.sort {|x,y| y[1] <=> x[1]}.to_h

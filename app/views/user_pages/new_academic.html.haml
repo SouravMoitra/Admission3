@@ -48,7 +48,7 @@
 
             = f.hidden_field :stream_id, value: @stream.id
           %p
-            = f.fields_for :subject_details do |builder|
+            = f.fields_for :main_subject_details do |builder|
               = render "subject_details_field", f: builder
           %p
             = f.fields_for :additional_subjects do |builder|

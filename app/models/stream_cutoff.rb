@@ -1,6 +1,6 @@
-class SubCutoff < ActiveRecord::Base
-  belongs_to :subject
-  validates :main_subject_id, presence: true, numericality: { only_integer: true }
+class StreamCutoff < ActiveRecord::Base
+  belongs_to :stream
+  validates :stream_id, presence: true, numericality: { only_integer: true }
   validates :gen, presence: true, numericality: { only_integer: true }
   validates :sc, presence: true, numericality: { only_integer: true }
   validates :st, presence: true, numericality: { only_integer: true }

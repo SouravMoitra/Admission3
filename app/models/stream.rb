@@ -1,9 +1,6 @@
 class Stream < ActiveRecord::Base
-	has_many :subjects
-	has_one :quota
-	has_one :cutoff
-
-	validates :streams, presence: true, length: { in: 2..20 }
-	validates :seats, presence: true, numericality:  { only_integer: true }
-
+  has_many :main_subjects
+  has_one :stream_cutoff
+  has_one :stream_quota
+  validates :stream_name, presence: true, length: { in: 2..20 }
 end
